@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Pizza Market</title>
+    <link href="/public/css/stylesheet.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <img class="logo" src="/public/images/pizza-market-logo.png" />
+        <input class="search" type="text" />
+        <button class="open-button">Open Market</button>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div id="firstSection">
+          <div id="popularSlices">
+            <div class="title">Popular Slices</div>
+            <ul class="results">
+              {{#each popSlices}}
+                <li>
+                  <div class="ticker">{{ticker}}</div>
+                  {{#if (isPositive diffLast)}}
+                    <div class="pos-change">{{percentFormat diffLast}}</div>
+                  {{else}}
+                    <div class="neg-change">{{percentFormat diffLast}}</div>
+                  {{/if}}
+                  <div class="quote">{{moneyFormat quote}}</div>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+          <canvas id="mainChart" style="width: 700px; height: 150px; display: inline-block;" height="150" width="700"></canvas>
+        </div>
+        <div id="secondSection">
+          <div id="recentUpdates">Recent Updates</div>
+          <div id="summaries">
+            <div id="mostPopular" class="summary-spot">
+              <div class="title">Most Popular</div>
+              <div class="ticker">{{mostPopular.ticker}}</div>
+              <div class="quote">{{moneyFormat mostPopular.quote}}</div>
+            </div>
+            <div id="newestSlice" class="summary-spot">
+              <div class="title">Newest Slice</div>
+              <div class="ticker">{{newestSlice.ticker}}</div>
+              <div class="quote">{{moneyFormat newestSlice.quote}}</div>
+            </div>
+            <div id="mostImproved" class="summary-spot">
+              <div class="title">Most Improved</div>
+              <div class="ticker">{{mostImproved.ticker}}</div>
+              <div class="quote">{{moneyFormat mostImproved.quote}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+    <script>
+      var context = {{{jsonOutput this}}};
+      var data = {{{jsonOutput this.pizzas}}};
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/js/application.js"></script>
+  </body>
+</html>
