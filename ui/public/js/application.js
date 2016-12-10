@@ -61,7 +61,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 156);
+/******/ 	return __webpack_require__(__webpack_require__.s = 155);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -4308,30 +4308,39 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-var Chart = __webpack_require__(108);
+var Chart = __webpack_require__(108),
+  dataStore = __webpack_require__(106);
 
-var ctx = document.getElementById('mainChart');
+var ctx = document.getElementById('mainChart'),
+  myLineChart;
 
-var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      datasets: [{
-        label: 'Pepperoni Pizza',
-        data: __webpack_require__(107).PEPP.map(function (quote) {
-          return quote;
-        })
-      }]
-    },
-    options: {
-      responsive: false,
-      legend: {
-        display: false
+function draw () {
+  myLineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dataStore.getAggregateDates(),
+        datasets: [{
+          label: 'Total',
+          data: dataStore.getAggregate()
+        }]
+      },
+      options: {
+        responsive: false,
+        legend: {
+          display: false
+        }
       }
-    }
-});
+  });
+}
 
-module.exports = myLineChart;
+function updateChart () {
+  myLineChart.data.labels = dataStore.getAggregateDates();
+  myLineChart.data.datasets[0].data = dataStore.getAggregate();
+  myLineChart.update();
+}
+
+module.exports.draw = draw;
+module.exports.updateChart = updateChart;
 
 
 /***/ },
@@ -14265,11 +14274,72 @@ module.exports = myLineChart;
 
 /***/ },
 /* 106 */
+/***/ function(module, exports) {
+
+
+var data = {};
+
+function init () {
+  data.pizzas = pizzas;
+  data.agg = generateAggregate();
+  console.log(data);
+}
+
+function generateAggregate () {
+  var localAgg = data.agg || [],
+    count = 0;
+
+  for (var key in data.pizzas) {
+    count++;
+    localAgg = data.pizzas[key].quotes.map(function (val, ix) {
+      return val + (localAgg[ix] || 0);
+    });
+  }
+
+  return localAgg.map(function (val) {
+    return +(val / count).toFixed(0);
+  });
+}
+
+function updatePizzas (payload) {
+  payload.forEach(function (val) {
+    data.pizzas[val.ticker].quotes.push(val.nextQuote);
+  });
+
+  data.agg = generateAggregate();
+}
+
+function getAggregate () {
+  return data.agg;
+}
+
+function getAggregateDates () {
+  var dates = [],
+    currDate = new Date(data.pizzas.PEPP.startingDate);
+
+  for (var i = 0; i < data.agg.length; i++) {
+    dates.push(currDate.toDateString());
+    currDate.setDate(currDate.getDate() + 1);
+  }
+
+  return dates;
+}
+
+module.exports = {
+  init: init,
+  updatePizzas: updatePizzas,
+  getAggregate: getAggregate,
+  getAggregateDates: getAggregateDates
+};
+
+
+/***/ },
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(151),
-  socket = __webpack_require__(155),
-  dataStore = __webpack_require__(154),
+  socket = __webpack_require__(154),
+  dataStore = __webpack_require__(106),
   lineChart = __webpack_require__(1);
 
 function init () {
@@ -14285,6 +14355,8 @@ function init () {
     }
   });
 
+  dataStore.init();
+
   socket.on('new_data', function (payload) {
     dataStore.updatePizzas(JSON.parse(payload));
     lineChart.updateChart();
@@ -14292,320 +14364,6 @@ function init () {
 }
 
 module.exports.init = init;
-
-
-/***/ },
-/* 107 */
-/***/ function(module, exports) {
-
-module.exports = {
-  'PEPP': [
-    12834,
-    12832,
-    12842,
-    12832,
-    12824,
-    12815,
-    12801,
-    12800,
-    12792,
-    12793,
-    12778,
-    12789,
-    12787,
-    12778,
-    12770,
-    12768,
-    12763,
-    12765,
-    12774,
-    12769,
-    12770,
-    12757,
-    12753,
-    12755,
-    12758,
-    12752,
-    12761,
-    12747,
-    12735,
-    12737,
-    12730,
-    12744,
-    12741,
-    12733,
-    12721,
-    12733,
-    12746,
-    12748,
-    12735,
-    12733,
-    12736,
-    12725,
-    12733,
-    12728,
-    12719,
-    12705,
-    12714,
-    12711,
-    12716,
-    12709,
-    12711,
-    12709,
-    12700,
-    12700,
-    12693,
-    12688,
-    12686,
-    12692,
-    12696,
-    12683,
-    12687,
-    12689,
-    12684,
-    12675,
-    12663,
-    12663,
-    12668,
-    12674,
-    12669,
-    12683,
-    12686,
-    12688,
-    12677,
-    12680,
-    12675,
-    12681,
-    12667,
-    12653,
-    12659,
-    12666,
-    12656,
-    12671,
-    12668,
-    12681,
-    12674,
-    12683,
-    12675,
-    12684,
-    12695,
-    12705,
-    12711,
-    12703,
-    12693,
-    12691,
-    12690,
-    12681,
-    12683,
-    12677,
-    12681,
-    12670
-  ],
-  'MEAT': [
-    7545,
-    7539,
-    7548,
-    7535,
-    7550,
-    7564,
-    7576,
-    7582,
-    7580,
-    7588,
-    7594,
-    7595,
-    7588,
-    7579,
-    7569,
-    7557,
-    7559,
-    7568,
-    7574,
-    7566,
-    7583,
-    7587,
-    7604,
-    7601,
-    7615,
-    7615,
-    7622,
-    7638,
-    7626,
-    7643,
-    7648,
-    7632,
-    7636,
-    7653,
-    7671,
-    7683,
-    7666,
-    7670,
-    7655,
-    7666,
-    7676,
-    7660,
-    7653,
-    7662,
-    7648,
-    7644,
-    7634,
-    7639,
-    7623,
-    7629,
-    7635,
-    7651,
-    7638,
-    7634,
-    7653,
-    7659,
-    7645,
-    7661,
-    7667,
-    7687,
-    7689,
-    7685,
-    7669,
-    7668,
-    7684,
-    7681,
-    7681,
-    7670,
-    7684,
-    7666,
-    7659,
-    7649,
-    7646,
-    7628,
-    7641,
-    7645,
-    7629,
-    7621,
-    7627,
-    7641,
-    7634,
-    7621,
-    7606,
-    7598,
-    7594,
-    7580,
-    7575,
-    7582,
-    7576,
-    7568,
-    7570,
-    7566,
-    7563,
-    7580,
-    7572,
-    7585,
-    7571,
-    7579,
-    7591,
-    7608
-  ],
-  'HAWA': [
-    1209,
-    1214,
-    1227,
-    1222,
-    1213,
-    1220,
-    1213,
-    1218,
-    1211,
-    1214,
-    1219,
-    1222,
-    1213,
-    1211,
-    1216,
-    1222,
-    1213,
-    1213,
-    1214,
-    1205,
-    1201,
-    1206,
-    1214,
-    1202,
-    1197,
-    1199,
-    1205,
-    1208,
-    1219,
-    1215,
-    1213,
-    1203,
-    1200,
-    1197,
-    1190,
-    1188,
-    1178,
-    1179,
-    1168,
-    1175,
-    1179,
-    1185,
-    1182,
-    1170,
-    1179,
-    1188,
-    1184,
-    1177,
-    1190,
-    1181,
-    1171,
-    1172,
-    1176,
-    1176,
-    1179,
-    1183,
-    1191,
-    1183,
-    1189,
-    1176,
-    1177,
-    1173,
-    1169,
-    1175,
-    1177,
-    1184,
-    1182,
-    1190,
-    1185,
-    1187,
-    1176,
-    1179,
-    1182,
-    1174,
-    1187,
-    1190,
-    1192,
-    1182,
-    1169,
-    1156,
-    1149,
-    1149,
-    1156,
-    1146,
-    1143,
-    1133,
-    1145,
-    1134,
-    1146,
-    1143,
-    1140,
-    1150,
-    1154,
-    1161,
-    1167,
-    1167,
-    1174,
-    1166,
-    1175,
-    1177
-  ]
-};
 
 
 /***/ },
@@ -35926,12 +35684,6 @@ module.exports = function(module) {
 /* 154 */
 /***/ function(module, exports) {
 
-
-
-/***/ },
-/* 155 */
-/***/ function(module, exports) {
-
 var socket = io();
 
 module.exports.emit = function (event, payload) {
@@ -35944,13 +35696,11 @@ module.exports.on = function (event, payload) {
 
 
 /***/ },
-/* 156 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
-var lineChart = __webpack_require__(1);
-
-__webpack_require__(106).init();
-
+__webpack_require__(107).init();
+__webpack_require__(1).draw();
 console.log('hello world');
 
 

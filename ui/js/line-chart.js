@@ -1,24 +1,33 @@
-var Chart = require('chart.js');
+var Chart = require('chart.js'),
+  dataStore = require('./dataStore');
 
-var ctx = document.getElementById('mainChart');
+var ctx = document.getElementById('mainChart'),
+  myLineChart;
 
-var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      datasets: [{
-        label: 'Pepperoni Pizza',
-        data: require('../../mock/quotes').PEPP.map(function (quote) {
-          return quote;
-        })
-      }]
-    },
-    options: {
-      responsive: false,
-      legend: {
-        display: false
+function draw () {
+  myLineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dataStore.getAggregateDates(),
+        datasets: [{
+          label: 'Total',
+          data: dataStore.getAggregate()
+        }]
+      },
+      options: {
+        responsive: false,
+        legend: {
+          display: false
+        }
       }
-    }
-});
+  });
+}
 
-module.exports = myLineChart;
+function updateChart () {
+  myLineChart.data.labels = dataStore.getAggregateDates();
+  myLineChart.data.datasets[0].data = dataStore.getAggregate();
+  myLineChart.update();
+}
+
+module.exports.draw = draw;
+module.exports.updateChart = updateChart;

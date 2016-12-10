@@ -7,7 +7,7 @@ module.exports = function (request, reply) {
     mostPopular: popGen.getMostPopular(),
     newestSlice: popGen.getNewestSlice(),
     mostImproved: popGen.getMostImproved(),
-
+    pizzas: dataStore.getPizzas()
   };
 
   return reply.view('index', context);

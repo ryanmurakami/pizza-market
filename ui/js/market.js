@@ -16,6 +16,8 @@ function init () {
     }
   });
 
+  dataStore.init();
+
   socket.on('new_data', function (payload) {
     dataStore.updatePizzas(JSON.parse(payload));
     lineChart.updateChart();
