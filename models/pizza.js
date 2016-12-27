@@ -1,6 +1,8 @@
 const fluxGen = require('../lib/fluxGen');
 
 module.exports = function (ticker, name, startingQuote, startingDate, variability, positivity) {
+  var self = this;
+
   this.ticker = ticker;
   this.name = name;
   this.variability = variability;
@@ -10,13 +12,13 @@ module.exports = function (ticker, name, startingQuote, startingDate, variabilit
   this.quotes = [this.startingQuote];
 
   this.getNext = function () {
-    var newQuote = fluxGen(this.quotes[this.quotes.length - 1], 1, this.variability, this.positivity)[0];
-    this.quotes.push(newQuote);
+    var newQuote = fluxGen(this.getLast(), 1, this.variability, this.positivity)[0];
+    addQuote(newQuote);
     return newQuote;
   };
 
   this.getLast = function () {
-    return this.quotes[this.quotes.length - 1];
+    return getQuote(this.quotes.length - 1);
   };
 
   this.getDatedQuotes = function () {
@@ -30,4 +32,13 @@ module.exports = function (ticker, name, startingQuote, startingDate, variabilit
 
     return quotesMap;
   };
+
+  // private methods
+  function addQuote (quote) {
+    self.quotes.push(quote);
+  }
+
+  function getQuote (quoteIndex) {
+    return self.quotes[quoteIndex];
+  }
 };

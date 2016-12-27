@@ -17,7 +17,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "./node_modules/.bin/webpack && node ."
+    "start": "./node_modules/.bin/webpack && node .",
+    "dev": "./node_modules/.bin/nodemon --exec 'npm start'"
   },
   "author": "Ryan Lewis <ryan@ryanhlewis.com>",
   "license": "ISC"
