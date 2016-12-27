@@ -8,7 +8,7 @@ function init () {
 }
 
 function generateAggregate () {
-  var localAgg = data.agg || [],
+  var localAgg = [],
     count = 0;
 
   for (var key in data.pizzas) {
@@ -40,16 +40,40 @@ function getAggregateDates () {
     currDate = new Date(data.pizzas.PEPP.startingDate);
 
   for (var i = 0; i < data.agg.length; i++) {
-    dates.push(currDate.toDateString());
+    dates.push(formatDate(currDate));
     currDate.setDate(currDate.getDate() + 1);
   }
 
   return dates;
 }
 
+function formatDate(date) {
+  return (date.getMonth() + 1) +
+    '/' +
+    date.getDate() +
+    '/' +
+    ('' + date.getFullYear()).slice(2);
+}
+
+function getPizza (ticker) {
+  return data.pizzas[ticker];
+}
+
+function getAllQuotes () {
+  var quotes = {};
+
+  for (var key in data.pizzas) {
+    quotes[data.pizzas[key].ticker] = data.pizzas[key].quotes;
+  }
+
+  return quotes;
+}
+
 module.exports = {
   init: init,
   updatePizzas: updatePizzas,
   getAggregate: getAggregate,
-  getAggregateDates: getAggregateDates
+  getAggregateDates: getAggregateDates,
+  getAllQuotes: getAllQuotes,
+  getPizza: getPizza
 };

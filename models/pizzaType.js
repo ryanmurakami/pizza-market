@@ -15,6 +15,10 @@ module.exports = function (ticker, name, startingQuote, startingDate, variabilit
     return newQuote;
   };
 
+  this.getLast = function () {
+    return this.quotes[this.quotes.length - 1];
+  };
+
   this.getDatedQuotes = function () {
     var quotesMap = {},
       curDate = startingDate;

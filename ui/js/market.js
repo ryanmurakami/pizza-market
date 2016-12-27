@@ -1,7 +1,8 @@
 var $ = require('jquery'),
   socket = require('./socketBroker'),
   dataStore = require('./dataStore'),
-  lineChart = require('./line-chart');
+  lineChart = require('./line-chart'),
+  summaries = require('./summaries');
 
 function init () {
   var $openButton = $('.open-button');
@@ -21,6 +22,7 @@ function init () {
   socket.on('new_data', function (payload) {
     dataStore.updatePizzas(JSON.parse(payload));
     lineChart.updateChart();
+    summaries.update();
   });
 }
 

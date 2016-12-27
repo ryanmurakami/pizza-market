@@ -1,5 +1,4 @@
-module.exports = {
-  method: 'GET',
-  path: '/',
-  handler: require('../handlers/index')
-}
+module.exports = [
+  require('./main'),
+  require('./start')
+].concat(require('./static'));

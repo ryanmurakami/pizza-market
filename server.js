@@ -15,7 +15,7 @@ server.connection({ port: process.env.PORT || 3000 });
 
 // setting up socket.io connection
 var io = require('socket.io')(server.listener);
-require('./events/all').register(io);
+require('./events').register(io);
 
 server.register([require('inert'), require('vision')], function (err) {
   if (err) throw err;
@@ -29,7 +29,7 @@ server.register([require('inert'), require('vision')], function (err) {
 
   require('./lib/dataStore').init(server);
 
-  server.route(require('./routes/all'));
+  server.route(require('./routes'));
   server.start(function (err) {
     if (err) throw err;
     console.log('Connected on ' + server.info.uri);
