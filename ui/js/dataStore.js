@@ -1,8 +1,7 @@
-
 var data = {};
 
 function init () {
-  data.pizzas = pizzas;
+  data.pizzas = {};
   data.agg = generateAggregate();
   console.log(data);
 }
@@ -47,7 +46,7 @@ function getAggregateDates () {
   return dates;
 }
 
-function formatDate(date) {
+function formatDate (date) {
   return (date.getMonth() + 1) +
     '/' +
     date.getDate() +

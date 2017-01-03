@@ -25,7 +25,7 @@ function draw () {
       },
       tooltips: {
         callbacks: {
-          label: function(tooltipItem, data) {
+          label: function (tooltipItem, data) {
             return moneyFormat(tooltipItem.yLabel);
           }
         }
@@ -45,8 +45,8 @@ function draw () {
   });
 }
 
-function slimArray(arr) {
-  return arr.slice(arr.length > 20 ? arr.length - 21 : 0)
+function slimArray (arr) {
+  return arr.slice(arr.length > 20 ? arr.length - 21 : 0);
 }
 
 function updateChart () {

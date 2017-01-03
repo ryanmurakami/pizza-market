@@ -1,6 +1,6 @@
-const fluxGen = require('../lib/fluxGen');
+var fluxGen = require('../lib/fluxGen');
 
-function getRand() {
+function getRand () {
   return +(Math.random() * 100).toFixed(0);
 }
 

@@ -67,10 +67,6 @@ function _getMostPopular () {
   }, { quote: 0 });
 }
 
-function _getNewestSlice () {
-  return { ticker: 'HAWA', quote: 7487 };
-}
-
 function _getFinalQuotes () {
   var allQuotes = dataStore.getAllQuotes(),
     finalQuotes = [];
@@ -87,7 +83,7 @@ function _getFinalQuotes () {
 function _getMostImproved () {
   var allQuotes = dataStore.getAllQuotes(),
     diffQuotes = [];
-  for (let key in allQuotes) {
+  for (var key in allQuotes) {
     diffQuotes.push({
       ticker: key,
       diff: allQuotes[key][allQuotes[key].length - 1] - allQuotes[key][0],
@@ -102,7 +98,7 @@ function _getMostImproved () {
   }, { diff: 0});
 }
 
-function _percentOf(val1, val2) {
+function _percentOf (val1, val2) {
   return (val2 - val1) / val1;
 }
 
