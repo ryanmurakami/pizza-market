@@ -1,14 +1,18 @@
 const fluxGen = require('../lib/fluxGen');
 
-module.exports = function (ticker, name, startingQuote, startingDate, variability, positivity) {
+function getRand() {
+  return +(Math.random() * 100).toFixed(0);
+}
+
+module.exports = function (startingDate, ticker, name, startingQuote, variability, positivity) {
   var self = this;
 
+  this.startingDate = startingDate;
   this.ticker = ticker;
   this.name = name;
-  this.variability = variability;
-  this.positivity = positivity;
   this.startingQuote = startingQuote;
-  this.startingDate = startingDate;
+  this.variability = variability || getRand();
+  this.positivity = positivity || getRand();
   this.quotes = [this.startingQuote];
 
   this.getNext = function () {
