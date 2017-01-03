@@ -130,3 +130,4 @@ globals:
 # UI globals
   document: true
   io: true
+  pizzas: true

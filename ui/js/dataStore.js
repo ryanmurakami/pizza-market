@@ -1,7 +1,7 @@
 var data = {};
 
 function init () {
-  data.pizzas = {};
+  data.pizzas = pizzas;
   data.agg = generateAggregate();
   console.log(data);
 }
