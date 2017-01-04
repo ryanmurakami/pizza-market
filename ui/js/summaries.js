@@ -91,7 +91,7 @@ function _getMostImproved () {
     });
   }
   return diffQuotes.reduce(function (best, curr) {
-    if (curr.diff > best.diff) {
+    if (!curr.quote || curr.diff > best.diff) {
       return curr;
     }
     return best;

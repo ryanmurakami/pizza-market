@@ -4,7 +4,7 @@ function getRand () {
   return +(Math.random() * 100).toFixed(0);
 }
 
-module.exports = function (startingDate, ticker, name, startingQuote, variability, positivity) {
+function Pizza (startingDate, ticker, name, startingQuote, variability, positivity) {
   var self = this;
 
   this.startingDate = startingDate;
@@ -45,4 +45,18 @@ module.exports = function (startingDate, ticker, name, startingQuote, variabilit
   function getQuote (quoteIndex) {
     return self.quotes[quoteIndex];
   }
+}
+
+Pizza.hydrate = function (pizzaObj) {
+  var newPizza = new Pizza(pizzaObj.startingDate,
+    pizzaObj.ticker,
+    pizzaObj.name,
+    pizzaObj.startingQuote,
+    pizzaObj.variability,
+    pizzaObj.positivity);
+
+  newPizza.quotes = pizzaObj.quotes;
+  return newPizza;
 };
+
+module.exports = Pizza;

@@ -11,7 +11,11 @@ var server = new Hapi.Server({
   }
 });
 
-server.connection({ port: process.env.PORT || 3000 });
+var port = process.env.PORT || 3000;
+
+require('./lib/api').initPort(port);
+
+server.connection({ port: port });
 
 // setting up socket.io connection
 var io = require('socket.io')(server.listener);
