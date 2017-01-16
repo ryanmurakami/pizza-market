@@ -2,7 +2,7 @@
   "name": "pizza-market",
   "version": "1.0.0",
   "description": "Pizza Stock Market",
-  "main": "server.js",
+  "main": "src/server.js",
   "dependencies": {
     "chart.js": "2.3.0",
     "handlebars": "4.0.6",
