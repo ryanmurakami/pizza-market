@@ -7,7 +7,7 @@
   <body>
     <header>
       <div class="container">
-        <img class="logo" src="/public/images/pizza-market-logo.png" />
+        <img class="logo" src="/public/images/pizza-market-logo.png" onclick="show('main')"/>
         <button class="open-button">Open Market</button>
       </div>
     </header>
@@ -19,7 +19,7 @@
             <ul class="results">
               {{#each popSlices}}
                 <li>
-                  <div class="ticker">{{ticker}}</div>
+                  <div class="ticker" onclick="show('{{ticker}}')">{{ticker}}</div>
                   {{#if (isPositive diffLast)}}
                     <div class="pos-change">{{percentFormat diffLast}}</div>
                   {{else}}
@@ -33,22 +33,40 @@
           <canvas id="mainChart" style="display: inline-block; vertical-align: bottom;" height="175" width="700"></canvas>
         </div>
         <div id="secondSection">
-          <div id="recentUpdates">Recent Updates</div>
+          <div class="title">Recent Updates</div>
           <div id="summaries">
             <div id="mostPopular" class="summary-spot">
               <div class="title">Most Popular</div>
-              <div class="ticker">{{mostPopular.ticker}}</div>
-              <div class="quote">{{moneyFormat mostPopular.quote}}</div>
+              {{#mostPopular}}
+                <div class="ticker" onclick="show('{{ticker}}')">{{ticker}}</div>
+                <div class="quote">{{moneyFormat quote}}</div>
+              {{/mostPopular}}
             </div>
             <div id="newestSlice" class="summary-spot">
               <div class="title">Newest Slice</div>
-              <div class="ticker">{{newestSlice.ticker}}</div>
-              <div class="quote">{{moneyFormat newestSlice.quote}}</div>
+              {{#newestSlice}}
+                <div class="ticker" onclick="show('{{ticker}}')">{{ticker}}</div>
+                <div class="quote">{{moneyFormat quote}}</div>
+              {{/newestSlice}}
             </div>
             <div id="mostImproved" class="summary-spot">
               <div class="title">Most Improved</div>
-              <div class="ticker">{{mostImproved.ticker}}</div>
-              <div class="quote">{{moneyFormat mostImproved.quote}}</div>
+              {{#mostImproved}}
+                <div class="ticker" onclick="show('{{ticker}}')">{{ticker}}</div>
+                <div class="quote">{{moneyFormat quote}}</div>
+              {{/mostImproved}}
+            </div>
+          </div>
+          <div id="spotlight">
+            <div class="left">
+              <div class="title">Pepperoni</div>
+              <div class="image">
+                <img src="/public/images/pepp.png" />
+              </div>
+              <div class="quote">$120.34</div>
+            </div>
+            <div class="right">
+              <canvas id="spotlightChart" style="display: inline-block; vertical-align: bottom;" height="266" width="700"></canvas>
             </div>
           </div>
         </div>

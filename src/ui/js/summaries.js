@@ -8,6 +8,7 @@ var $mostPopular = $('#mostPopular'),
   $newestSlice = $('#newestSlice'),
   $mostImproved = $('#mostImproved'),
   $popularSlices = $('#popularSlices').find('.results'),
+  $spotlight = $('#spotlight'),
   negClass = 'neg-change',
   posClass = 'pos-change',
   negOrPos = '.' + negClass + ',.' + posClass;
@@ -17,6 +18,7 @@ function update () {
   _updateMostPopular();
   _updateNewestSlice();
   _updateMostImproved();
+  _updateSpotlight();
 }
 
 function _updatePops () {
@@ -36,7 +38,9 @@ function _updatePops () {
 function _updateMostPopular () {
   var mostPopular = _getMostPopular();
 
-  $mostPopular.find('.ticker').text(mostPopular.ticker);
+  $mostPopular.find('.ticker')
+    .text(mostPopular.ticker)
+    .attr('onclick', 'show(\'' + mostPopular.ticker + '\')');
   $mostPopular.find('.quote').text(moneyFormat(mostPopular.quote));
 }
 
@@ -47,7 +51,9 @@ function _updateNewestSlice () {
 
 function _updateMostImproved () {
   var pizza = _getMostImproved();
-  $mostImproved.find('.ticker').text(pizza.ticker);
+  $mostImproved.find('.ticker')
+    .text(pizza.ticker)
+    .attr('onclick', 'show(\'' + pizza.ticker + '\')');
   $mostImproved.find('.quote').text(moneyFormat(pizza.quote));
 }
 
@@ -96,6 +102,14 @@ function _getMostImproved () {
     }
     return best;
   }, { diff: 0});
+}
+
+function _updateSpotlight () {
+  var spotlightData = dataStore.getSpotlight();
+
+  if (spotlightData) {
+    $spotlight.find('.quote').text(moneyFormat(spotlightData.quotes[spotlightData.quotes.length - 1]));
+  }
 }
 
 function _percentOf (val1, val2) {

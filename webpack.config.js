@@ -4,5 +4,10 @@ module.exports = {
   output: {
     path: __dirname + '/src/ui/public/js',
     filename: 'application.js'
-  }
+  },
+  externals: [
+    {
+      'window': 'window'
+    }
+  ]
 };

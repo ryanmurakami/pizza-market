@@ -6,6 +6,17 @@ function init () {
   console.log(data);
 }
 
+function setSpotlight (ticker) {
+  data.spotlight = ticker;
+}
+
+function getSpotlight () {
+  if (!data.spotlight) {
+    return false;
+  }
+  return getPizza(data.spotlight);
+}
+
 function generateAggregate () {
   var localAgg = [],
     count = 0;
@@ -35,8 +46,12 @@ function getAggregate () {
 }
 
 function getAggregateDates () {
+  return getDates(data.pizzas.PEPP.startingDate);
+}
+
+function getDates (startingDate) {
   var dates = [],
-    currDate = new Date(data.pizzas.PEPP.startingDate);
+    currDate = new Date(startingDate);
 
   for (var i = 0; i < data.agg.length; i++) {
     dates.push(formatDate(currDate));
@@ -73,6 +88,9 @@ module.exports = {
   updatePizzas: updatePizzas,
   getAggregate: getAggregate,
   getAggregateDates: getAggregateDates,
+  getDates: getDates,
   getAllQuotes: getAllQuotes,
-  getPizza: getPizza
+  getPizza: getPizza,
+  getSpotlight: getSpotlight,
+  setSpotlight: setSpotlight
 };

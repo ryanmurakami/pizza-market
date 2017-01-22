@@ -20,7 +20,7 @@ module.exports = function (request, reply) {
             context.pizzas = pizzas;
 
             return reply.view('index', context);
-          })
+          });
         });
       });
     });

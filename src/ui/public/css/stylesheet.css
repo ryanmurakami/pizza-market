@@ -16,6 +16,7 @@ header {
 }
 header img.logo {
   height: 38px;
+  cursor: pointer;
 }
 header .open-button {
   float: right;
@@ -48,11 +49,6 @@ header input.search {
   border: none;
 }
 
-#recentUpdates {
-  background-color: #38C193;
-  color: white;
-}
-
 #popularSlices {
   display: inline-block;
 }
@@ -78,6 +74,13 @@ header input.search {
   padding: 5px 10px;
 }
 
+#popularSlices .ticker:hover,
+#summaries .ticker:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  opacity: .8;
+}
+
 .pos-change {
   color: green;
   font-size: 14px;
@@ -100,12 +103,14 @@ header input.search {
   display: inline-block;
 }
 
-#recentUpdates {
+#secondSection > .title {
   margin-bottom: 15px;
   text-align: center;
   text-align: center;
   padding: 8px 0;
   font-size: 24px;
+  background-color: #38C193;
+  color: white;
 }
 
 #summaries {
@@ -122,4 +127,32 @@ header input.search {
 .summary-spot .ticker {
   font-size: 48px;
   font-weight: bold;
+}
+
+#spotlight {
+  display: none;
+}
+
+#spotlight > .left {
+  display: inline-block;
+  text-align: center;
+}
+
+#spotlight > .left > .title {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+#spotlight > .left > .image > img {
+  height: 200px;
+}
+
+#spotlight > .left > .quote {
+  font-size: 28px;
+}
+
+#spotlight > .right {
+  float: right;
+  display: inline-block;
+  padding-top: 15px;
 }

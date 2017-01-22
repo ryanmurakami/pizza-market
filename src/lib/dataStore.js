@@ -39,7 +39,7 @@ function initPizzas (callback) {
     startingDate = new Date();
 
   pizzas.forEach(function (pizza) {
-    realPizzas[pizza[0]] = new Pizza(startingDate, pizza[0], pizza[1], pizza[2], pizza[3], pizza[4]);
+    realPizzas[pizza[0]] = new Pizza(startingDate, data.quotes[pizza[0]], pizza[0], pizza[1], pizza[2], pizza[3], pizza[4]);
   });
 
   callback(realPizzas);

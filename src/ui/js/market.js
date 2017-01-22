@@ -21,7 +21,8 @@ function init () {
 
   socket.on('new_data', function (payload) {
     dataStore.updatePizzas(JSON.parse(payload));
-    lineChart.updateChart();
+    lineChart.updateMainChart();
+    lineChart.updateSpotlightChart();
     summaries.update();
   });
 }

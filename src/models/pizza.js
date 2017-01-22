@@ -4,7 +4,7 @@ function getRand () {
   return +(Math.random() * 100).toFixed(0);
 }
 
-function Pizza (startingDate, ticker, name, startingQuote, variability, positivity) {
+function Pizza (startingDate, quotes, ticker, name, startingQuote, variability, positivity) {
   var self = this;
 
   this.startingDate = startingDate;
@@ -13,7 +13,7 @@ function Pizza (startingDate, ticker, name, startingQuote, variability, positivi
   this.startingQuote = startingQuote;
   this.variability = variability || getRand();
   this.positivity = positivity || getRand();
-  this.quotes = [this.startingQuote];
+  this.quotes = quotes || [this.startingQuote];
 
   this.getNext = function () {
     var newQuote = fluxGen(this.getLast(), 1, this.variability, this.positivity)[0];
@@ -48,7 +48,9 @@ function Pizza (startingDate, ticker, name, startingQuote, variability, positivi
 }
 
 Pizza.hydrate = function (pizzaObj) {
-  var newPizza = new Pizza(pizzaObj.startingDate,
+  var newPizza = new Pizza(
+    pizzaObj.startingDate,
+    pizzaObj.quotes,
     pizzaObj.ticker,
     pizzaObj.name,
     pizzaObj.startingQuote,
