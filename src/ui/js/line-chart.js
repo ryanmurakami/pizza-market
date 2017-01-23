@@ -104,8 +104,8 @@ function updateSpotlightChart () {
 }
 
 module.exports = {
-  drawMain,
-  drawSpotlight,
-  updateMainChart,
-  updateSpotlightChart
+  drawMain: drawMain,
+  drawSpotlight: drawSpotlight,
+  updateMainChart: updateMainChart,
+  updateSpotlightChart: updateSpotlightChart
 };
