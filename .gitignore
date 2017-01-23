@@ -5,6 +5,6 @@ branch.js
 assets
 
 pizza-market.sketch
-src/ui/public/js
+src/ui/public/js/*.js
 
 .DS_Store
