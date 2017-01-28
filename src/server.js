@@ -31,7 +31,7 @@ server.register([require('inert'), require('vision')], function (err) {
     helpersPath: 'ui/helpers'
   });
 
-  require('./lib/dataStore').init(server);
+  require('./lib/dataStore').init();
 
   server.route(require('./routes'));
   server.start(function (err) {

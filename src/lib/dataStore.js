@@ -3,8 +3,7 @@ var Pizza = require('../models/pizza');
 var data = {};
 
 // initialize data store with bootstrapped data
-function init (server) {
-  server.app.data = data;
+function init () {
   data.quotes = require('../mock/quotes');
   initPizzas(function (pizzas) {
     data.pizzas = pizzas;
